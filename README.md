@@ -2,7 +2,7 @@
 
 This project demonstrates a fully serverless data processing pipeline using AWS services. It allows clients to upload data via a REST API and processes it through an event-driven architecture using AWS Step Functions and Lambda.
 
-![Architecture Diagram](./33529e54-7b08-41fe-9578-72c7b42f4340.png)
+![Architecture Diagram](./Capture.PNG)
 
 ---
 
