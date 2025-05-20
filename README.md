@@ -1,6 +1,7 @@
-# Serverless Data Processing Workflow on AWS
+# Serverless Image Processing Workflow on AWS
 
-This project demonstrates a fully serverless data processing pipeline using AWS services. It allows clients to upload data via a REST API and processes it through an event-driven architecture using AWS Step Functions and Lambda.
+
+This project demonstrates a serverless image processing application built using AWS services. Users upload images to an S3 bucket, which triggers a Lambda function to process and resize the images. Processed images are then stored in a separate S3 bucket, optionally accompanied by metadata and orchestrated workflows.
 
 ![Architecture Diagram](./Capture.PNG)
 
@@ -9,27 +10,28 @@ This project demonstrates a fully serverless data processing pipeline using AWS 
 ##  Architecture Overview
 
 ### Components:
-- **Client**: Web or mobile app that triggers the workflow.
-- **Amazon API Gateway**: Handles HTTP requests from clients.
-- **Amazon S3**: Stores incoming files or data payloads.
-- **AWS Lambda**: Executes backend logic at various stages.
-- **AWS Step Functions**: Orchestrates the flow across multiple Lambda functions.
-- **Amazon DynamoDB**: Stores structured data (e.g., metadata, logs, results).
-- **Amazon CloudWatch Logs**: Captures logs for observability and debugging.
+- **Client**: A user or application that uploads images.
+- **Amazon S3**: 
+  - Stores the original images (source bucket).
+  - Stores processed images (destination bucket).
+- **AWS Lambda**: Triggered by S3 events to process images (resize, watermark).
+- **Amazon API Gateway** *(Optional)*: Provides an HTTP endpoint for uploads.
+- **Amazon DynamoDB** *(Optional)*: Stores image metadata such as filenames, dimensions, and timestamps.
+- **AWS Step Functions** *(Optional)*: Manages more complex workflows and error handling.
+- **Amazon CloudWatch Logs**: Captures logs for monitoring and debugging.
 
 ---
 
-##  Workflow
+## Workflow
 
-1. A client sends a request to the **API Gateway**.
-2. The request payload is stored in **Amazon S3**.
-3. An **AWS Lambda** function is triggered to initiate the **Step Functions workflow**.
-4. **Step Functions** orchestrate a series of **Lambda** functions for:
-   - Data validation
-   - Transformation
-   - Enrichment
-   - Final storage or logging
-5. Results are saved in **Amazon S3** or **DynamoDB**, and logs are pushed to **CloudWatch**.
+1. A user uploads an image to the **Source S3 Bucket**.
+2. The upload triggers an **AWS Lambda** function.
+3. The Lambda function:
+   - Retrieves and processes the image (e.g., resizes or adds watermark).
+   - Stores the result in the **Destination S3 Bucket**.
+4. Metadata is written to **Amazon DynamoDB**.
+5. **AWS Step Functions** manage complex multi-step processes.
+6. Logs are stored in **Amazon CloudWatch Logs**.
 
 ---
 
@@ -46,12 +48,12 @@ This project demonstrates a fully serverless data processing pipeline using AWS 
 
 ## Benefits
 
-- Fully serverless – no servers to manage
-- Scalable and event-driven
-- Easy to extend and monitor
-- Pay-as-you-go pricing
+- **Fully Serverless** – No server provisioning or management.
+- **Scalable** – Automatically handles growing image upload volume.
+- **Cost-Efficient** – Pay only for what you use.
+- **Modular** – Easily extendable with additional AWS services.
+- **Secure** – Fine-grained access control with IAM.
 
 ---
 
-##  Folder Structure (Recommended)
 
