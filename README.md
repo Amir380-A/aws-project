@@ -26,12 +26,13 @@ This project demonstrates a serverless image processing application built using 
 
 1. A user uploads an image to the **Source S3 Bucket**.
 2. The upload triggers an **AWS Lambda** function.
-3. The Lambda function:
+3. The first Lambda function is used to trigger the step functions workflow (S3 can not trigger the workflow).
+4. The Lambda function:
    - Retrieves and processes the image (e.g., resizes or adds watermark).
    - Stores the result in the **Destination S3 Bucket**.
-4. Metadata is written to **Amazon DynamoDB**.
-5. **AWS Step Functions** manage complex multi-step processes.
-6. Logs are stored in **Amazon CloudWatch Logs**.
+5. Metadata is written to **Amazon DynamoDB**.
+6. **AWS Step Functions** manage complex multi-step processes.
+7. Logs are stored in **Amazon CloudWatch Logs**.
 
 ---
 
