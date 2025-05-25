@@ -1,47 +1,43 @@
 # Serverless Image Processing Workflow on AWS
 
+This project demonstrates a serverless image processing application built using AWS services. Users upload images through an HTTP API, which stores them in an S3 bucket. This triggers a Lambda function that processes the image and stores the output, while also logging activity and optionally saving metadata.
 
-This project demonstrates a serverless image processing application built using AWS services. Users upload images to an S3 bucket, which triggers a Lambda function to process and resize the images. Processed images are then stored in a separate S3 bucket, optionally accompanied by metadata and orchestrated workflows.
-
-![Architecture Diagram](./Capture.PNG)
+![Architecture Diagram](Capture1.PNG)
 
 ---
 
-##  Architecture Overview
+## Architecture Overview
 
 ### Components:
-- **Client**: A user or application that uploads images.
+- **Client**: A user or application (web/mobile) that uploads images.
+- **Amazon API Gateway**: Provides an HTTP endpoint for clients to securely upload images to S3.
 - **Amazon S3**: 
-  - Stores the original images (source bucket).
-  - Stores processed images (destination bucket).
-- **AWS Lambda**: Triggered by S3 events to process images (resize, watermark).
-- **Amazon API Gateway** *(Optional)*: Provides an HTTP endpoint for uploads.
-- **Amazon DynamoDB** *(Optional)*: Stores image metadata such as filenames, dimensions, and timestamps.
-- **AWS Step Functions** *(Optional)*: Manages more complex workflows and error handling.
-- **Amazon CloudWatch Logs**: Captures logs for monitoring and debugging.
+  - Stores the uploaded images (source bucket).
+  - Stores processed images (destination bucket or same bucket with a different key/prefix).
+- **AWS Lambda**: Triggered by S3 events to process images (e.g., resize, watermark).
+- **Amazon DynamoDB**: Stores image metadata such as filenames, processing status, and timestamps.
+- **Amazon CloudWatch Logs**: Captures logs for monitoring, debugging, and auditing.
 
 ---
 
 ## Workflow
 
-1. A user uploads an image to the **Source S3 Bucket**.
-2. The upload triggers an **AWS Lambda** function.
-3. The first Lambda function is used to trigger the step functions workflow (S3 can not trigger the workflow).
+1. A user uploads an image via **Amazon API Gateway**.
+2. The API Gateway uploads the image to the **Amazon S3** bucket.
+3. The S3 upload triggers an **AWS Lambda** function.
 4. The Lambda function:
    - Retrieves and processes the image (e.g., resizes or adds watermark).
-   - Stores the result in the **Destination S3 Bucket**.
-5. Metadata is written to **Amazon DynamoDB**.
-6. **AWS Step Functions** manage complex multi-step processes.
-7. Logs are stored in **Amazon CloudWatch Logs**.
+   - Stores the processed image in **Amazon S3**.
+   - Writes metadata (e.g., filename, timestamp, dimensions) to **Amazon DynamoDB**.
+   - Sends logs and execution details to **Amazon CloudWatch Logs**.
 
 ---
 
-##  Technologies Used
+## Technologies Used
 
 - **Amazon API Gateway**
 - **Amazon S3**
 - **AWS Lambda**
-- **AWS Step Functions**
 - **Amazon DynamoDB**
 - **Amazon CloudWatch**
 
@@ -53,8 +49,9 @@ This project demonstrates a serverless image processing application built using 
 - **Scalable** – Automatically handles growing image upload volume.
 - **Cost-Efficient** – Pay only for what you use.
 - **Modular** – Easily extendable with additional AWS services.
-- **Secure** – Fine-grained access control with IAM.
+- **Secure** – Fine-grained access control with IAM and API Gateway.
 
 ---
+
 
 
