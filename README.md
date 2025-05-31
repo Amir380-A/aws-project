@@ -52,6 +52,26 @@ This project demonstrates a serverless image processing application built using 
 - **Secure** – Fine-grained access control with IAM and API Gateway.
 
 ---
+## Reproduce the arhitectrue on AWS
+
+warning: terraform scripts are NOT up to date.
+please make sure that Terraform is installed on your machine, you can check through:
+```bash
+terraform -v
+```
+then cd into terraform folder and :
+```bash
+terraform init
+terraform plan ---to view your dry run planned to do infra
+terraform apply
+```
+Tear down the whole infra through:
+```bash
+terraform destroy
+```
+
+
+
 
 
 
